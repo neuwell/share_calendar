@@ -1,0 +1,50 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: "Dockerfile"
+    environment:
+      - GEM_HOME=/var/www/${APP_REPOSITORY_NAME}/.gems
+      - TZ=UTC
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+      - "2222:22"
+    volumes:
+      - ../${APP_REPOSITORY_NAME}:/var/www/${APP_REPOSITORY_NAME}
+    links:
+      - mysql
+    tty: true
+    networks:
+      - backend
+    working_dir: /var/www/${APP_REPOSITORY_NAME}
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: "Dockerfile"
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - backend
+
+  mysql:
+    build:
+      context: ./mysql
+      dockerfile: "Dockerfile"
+    volumes:
+      - ./data/${APP_REPOSITORY_NAME}/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: "bridge"

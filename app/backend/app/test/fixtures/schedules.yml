@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_hash: MyString
+  year: MyString
+  month: MyString
+  description: MyString
+  content: 
+
+two:
+  id_hash: MyString
+  year: MyString
+  month: MyString
+  description: MyString
+  content: 
