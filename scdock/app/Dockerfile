@@ -27,5 +27,6 @@ RUN apt-get purge -y nodejs
 RUN npm i -g npm@4.6.1
 
 RUN npm install -g @vue/cli
+RUN npm install -g @vue/cli-init
 
 RUN apt-get install -y tzdata libmysqlclient-dev jq

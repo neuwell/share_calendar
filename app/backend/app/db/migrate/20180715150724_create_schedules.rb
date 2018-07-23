@@ -6,7 +6,6 @@ class CreateSchedules < ActiveRecord::Migration[5.2]
       t.string :month
       t.string :title
       t.string :description
-      t.json :contents
 
       t.timestamps
     end

@@ -9,8 +9,17 @@
 
 Schedule.create(
   [
-    {id_hash: 'hash1', title: 'test1', year: '2000', month: '04' ,description: 'April news', contents: [{}, {text: 'test'}, {}]},
-    {id_hash: 'hash2', title: 'test2', year: '2000', month: '05' ,description: 'May news', contents: [{}, {text: 'test'}, {}]},
-    {id_hash: 'hash3', title: 'test3', year: '2000', month: '06' ,description: 'June news', contents: [{}, {text: 'test'}, {}]}
+    {id_hash: 'hash1', title: 'test1', year: '2000', month: '04' ,description: 'April news'},
+    {id_hash: 'hash2', title: 'test2', year: '2000', month: '05' ,description: 'May news'},
+    {id_hash: 'hash3', title: 'test3', year: '2000', month: '06' ,description: 'June news'}
+  ]
+)
+
+ScheduleItem.create(
+  [
+    {schedule_id: 1, date: 1, memo: 'memo1', style: { 'background-color': '#C0FFEE' } },
+    {schedule_id: 1, date: 3, memo: 'memo3', style: { 'background-color': '#C0FFEE' }},
+    {schedule_id: 1, date: 12, memo: 'memo12', style: { 'background-color': '#C0FFEE' }},
+    {schedule_id: 2, date: 1, memo: 'memo1', style: { 'background-color': '#C0FFEE' }}
   ]
 )

@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_15_161850) do
+ActiveRecord::Schema.define(version: 2018_07_18_233855) do
+
+  create_table "schedule_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "schedule_id"
+    t.string "date"
+    t.string "memo"
+    t.json "style"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["schedule_id"], name: "index_schedule_items_on_schedule_id"
+  end
 
   create_table "schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "id_hash"
@@ -18,10 +28,10 @@ ActiveRecord::Schema.define(version: 2018_07_15_161850) do
     t.string "month"
     t.string "title"
     t.string "description"
-    t.json "contents"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["id_hash"], name: "index_schedules_on_id_hash", unique: true
   end
 
+  add_foreign_key "schedule_items", "schedules"
 end

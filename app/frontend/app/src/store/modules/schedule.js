@@ -24,9 +24,8 @@ const schedule = {
       const res = await axios.get('/schedules/' + id)
       commit('setSchedule', res.data)
     },
-    async postSchedule ({commit}, {id, data}) {
-      console.log(data)
-      const res = await axios.put('/schedules', data)
+    async postSchedule ({commit}, data) {
+      const res = await axios.post('/schedules', data)
       commit('setSchedule', res.data)
     }
   }
