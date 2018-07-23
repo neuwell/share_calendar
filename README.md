@@ -24,7 +24,7 @@ $ npm run dev
 Rails サーバー起動
 $ cd backend/app
 $ rail s
-``
+```
 
 ## 目標
 - アプリの完成
