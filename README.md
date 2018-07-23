@@ -1,6 +1,31 @@
 # share_calendar
 - 自分の1ヶ月のスケジュールをカレンダー形式で公開するアプリ
 
+## 環境構築
+
+```
+設定ファイルの編集
+cp .env-example .env
+vi .env
+
+ホストマシン
+$ cd scdock
+$ docker-compose up -d app --build
+$ dokcer-compose exec app bash
+
+Dockerマシン
+$ pwd
+→ /var/www
+/app
+フロントサーバー起動
+$ cd frontend/app
+$ npm run dev
+
+Rails サーバー起動
+$ cd backend/app
+$ rail s
+``
+
 ## 目標
 - アプリの完成
 - Railsでの実装からRubyと合わせて知見を得る
