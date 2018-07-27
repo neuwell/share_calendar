@@ -17,9 +17,9 @@ Schedule.create(
 
 ScheduleItem.create(
   [
-    {schedule_id: 1, date: 1, memo: 'memo1', style: { 'background-color': '#C0FFEE' } },
-    {schedule_id: 1, date: 3, memo: 'memo3', style: { 'background-color': '#C0FFEE' }},
-    {schedule_id: 1, date: 12, memo: 'memo12', style: { 'background-color': '#C0FFEE' }},
-    {schedule_id: 2, date: 1, memo: 'memo1', style: { 'background-color': '#C0FFEE' }}
+    {schedule_id: 1, date: 1, memo: 'memo1', color: '#C0FFEE'},
+    {schedule_id: 1, date: 3, memo: 'memo3', color: '#C0FFEE'},
+    {schedule_id: 1, date: 12, memo: 'memo12', color: '#C0FFEE'},
+    {schedule_id: 2, date: 1, memo: 'memo1', color: '#C0FFEE'}
   ]
 )

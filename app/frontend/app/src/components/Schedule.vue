@@ -1,7 +1,7 @@
 <template>
   <div class="schedule">
     <div class="row">
-      <div class="col s12 m6 offset-m3">
+      <div class="col s12 l6 offset-l3">
         <section>
           <h1>スケジュール</h1>
           <div class="">
@@ -11,12 +11,12 @@
             </form>
           </div>
           <div class="row">
-            <div class="col m2">タイトル:</div>
-            <div class="col m8"><h3>{{schedule.title}}</h3></div>
+            <div class="col l2">タイトル:</div>
+            <div class="col l8"><h3>{{schedule.title}}</h3></div>
           </div>
           <div class="row">
-            <div class="col m2">どんな予定？:</div>
-            <div class="col m8">{{schedule.description}}</div>
+            <div class="col l2">どんな予定？:</div>
+            <div class="col l8">{{schedule.description}}</div>
           </div>
           <div class="row">
             <div>
@@ -34,10 +34,10 @@
           <div class="row">
             <div class="row calendar-row" v-for="block in calendar.blocks" :key="block.id">
               <div class="calendar-col day-item" v-for="item in block" :key="item.id">
-                <div v-if="schedule.month === item.month" class="">
+                <div v-if="schedule.month == item.month">
                   {{item.day}}
-                  <div v-if="scheduleItem.date == item.day" v-for="(scheduleItem, index) in schedule_items" :key="index">
-                    {{scheduleItem.memo}}
+                  <div :style="item.style">
+                    {{item.memo}}
                   </div>
                 </div>
               </div>
@@ -65,7 +65,7 @@ export default {
     schedule: function () {
       return this.$store.state.schedule.schedule.schedule || {}
     },
-    schedule_items: function () {
+    scheduleItems: function () {
       return this.$store.state.schedule.schedule.schedule_items || {}
     }
   },
@@ -84,21 +84,29 @@ export default {
   methods: {
     renderCalendar: function (year, month) {
       let startDayOfCalendar = this.$moment(year + '-' + month).startOf('month').startOf('week')
+      let endDayOfCalendar = this.$moment(year + '-' + month).endOf('month').endOf('week')
+      let calendarLength = endDayOfCalendar.diff(startDayOfCalendar, 'days') + 1
       let block = []
       this.calendar.blocks = []
-      for (var i = 0; i < 42; i++) {
+      for (var i = 0; i < calendarLength; i++) {
         let targetDate = startDayOfCalendar
         let item = {
           'id': i + 1,
           'isToday': false,
-          'year': targetDate.format('YYYY'),
-          'month': targetDate.format('MM'),
-          'day': targetDate.format('D'),
+          'year': targetDate.year(),
+          'month': targetDate.month() + 1,
+          'day': targetDate.date(),
           'date': targetDate.format('YYYY') + '-' + targetDate.format('MM') + '-' + targetDate.format('DD')
         }
 
         if (item.year + '-' + item.month + '-' + item.day === this.today) {
           item.isToday = true
+        }
+
+        let schedule = this.scheduleItems.find(s => (s.date == item.day)) || {}
+        item.memo = schedule.memo || '未定'
+        if (schedule.color) {
+          item.style = 'background-color: ' + schedule.color + ';'
         }
 
         block.push(item)

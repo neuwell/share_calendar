@@ -20,13 +20,9 @@ class SchedulesController < ApplicationController
   # POST /schedules
   def create
     @schedule = Schedule.new(schedule_params)
+    @schedule.id_hash = SecureRandom.hex(16)
 
-    ### TODO postの
-    for item in schedule_params[:scheduleItems] do
-      @Schedule_item = @schedule.ScheduleItems.new(item)
-    end
-
-    if @schedule.save || @Schedule_item.save
+    if @schedule.save
       render json: @schedule, status: :created, location: @schedule
     else
       render json: @schedule.errors, status: :unprocessable_entity
@@ -56,6 +52,6 @@ class SchedulesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def schedule_params
-      params.require(:schedule).permit(:title, :year, :month, :description, :scheduleItems)
+      params.require(:schedule).permit(:title, :year, :month, :description, :schedule_items_attributes => [:date, :memo, :color])
     end
 end

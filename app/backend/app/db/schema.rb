@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2018_07_18_233855) do
     t.bigint "schedule_id"
     t.string "date"
     t.string "memo"
-    t.json "style"
+    t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["schedule_id"], name: "index_schedule_items_on_schedule_id"

@@ -4,7 +4,7 @@ class CreateScheduleItems < ActiveRecord::Migration[5.2]
       t.references :schedule, foreign_key: true
       t.string :date
       t.string :memo
-      t.json :style
+      t.string :color
 
       t.timestamps
     end

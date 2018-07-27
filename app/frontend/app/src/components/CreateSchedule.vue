@@ -1,7 +1,7 @@
 <template>
   <div id="create-schedule" class="create-schedule ">
     <div class="row">
-      <div class="col s12 m6 offset-m3">
+      <div class="col s12 l6 offset-l3">
         <h2>スケジュールをつくる</h2>
         <div class="row">
           <el-form ref="formInput" :model="formInput" :rules="rules" :label-position="'top'">
@@ -11,14 +11,14 @@
             <el-form-item label="どんな予定？" prop="description">
               <el-input type="textarea" v-model="formInput.description" placeholder="ex.来週から始まるアルバイトの予定！開いてる日は遊べるよ！"></el-input>
             </el-form-item>
-            <div class="input-field col s6 m6">
+            <div class="input-field col s6 l6">
               <el-form-item label="年" prop="year">
                 <el-select v-model="formInput.year" placeholder="Select">
                   <el-option v-for="item in yearOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
                 </el-select>
               </el-form-item>
             </div>
-            <div class="input-field col s6 m6">
+            <div class="input-field col s6 l6">
               <el-form-item label="年" prop="month">
                 <el-select v-model="formInput.month" placeholder="Select">
                   <el-option v-for="item in monthOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -39,8 +39,8 @@
           </div>
           <div class="row">
             <div class="row calendar-row" v-for="block in calendar.blocks" :key="block.id">
-              <div class="calendar-col day-item" v-for="item in block" :key="item.id">
-                <div v-if="formInput.month === item.month" class="" @click="setSchedule(item.day)">
+              <div class="calendar-col day-item" v-for="item in block" :key="item.id" @click="setSchedule(item.day)">
+                <div v-if="formInput.month === item.month" class="">
                   {{item.day}}
                   <div :style="item.style">
                     {{item.memo}}
@@ -142,7 +142,9 @@ export default {
         }
         let schedule = this.formInput.scheduleItems.find(s => (s.date === item.day)) || {}
         item.memo = schedule.memo || '未定'
-        item.style = schedule.style || {}
+        if (schedule.color) {
+          item.style = 'background-color: ' + schedule.color + ';'
+        }
 
         block.push(item)
         if (i !== 0 && (i + 1) % 7 === 0) {
@@ -159,9 +161,7 @@ export default {
         this.formInput.scheduleItems.push({
           date: targetDay,
           memo: '出勤',
-          style: {
-            'background-color': RED_COLOR
-          }
+          color: RED_COLOR
         })
         return
       }
@@ -169,17 +169,27 @@ export default {
       switch (this.formInput.scheduleItems[index].memo) {
         case '出勤':
           this.formInput.scheduleItems[index].memo = 'お休み'
-          this.formInput.scheduleItems[index].style = { 'background-color': BLUE_COLOR }
+          this.formInput.scheduleItems[index].color = BLUE_COLOR
           break
         default:
           this.formInput.scheduleItems.splice(index, 1)
       }
     },
     submit () {
-      this.$store.dispatch('schedule/postSchedule', this.formInput)
+      let res = {
+        schedule: {
+          month: this.formInput.month,
+          year: this.formInput.year,
+          title: this.formInput.title,
+          description: this.formInput.description,
+          schedule_items_attributes: this.formInput.scheduleItems
+        }
+      }
+      this.$store.dispatch('schedule/postSchedule', res)
     },
     cansell () {
       this.$refs['formInput'].resetFields()
+      this.formInput.scheduleItems = []
     }
   }
 }
@@ -213,5 +223,6 @@ export default {
 .day-item {
   background-color: rgba(0,0,0,0.1);
   overflow: hidden;
+  cursor: pointer;
 }
 </style>
