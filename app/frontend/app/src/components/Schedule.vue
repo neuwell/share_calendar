@@ -80,11 +80,14 @@ export default {
   },
   created () {
     this.$store.dispatch('schedule/getSchedule', this.$route.params.id_hash)
+      .catch(e => {
+        this.$router.push('/schedules')
+      })
   },
   methods: {
     renderCalendar: function (year, month) {
-      let startDayOfCalendar = this.$moment(year + '-' + month).startOf('month').startOf('week')
-      let endDayOfCalendar = this.$moment(year + '-' + month).endOf('month').endOf('week')
+      let startDayOfCalendar = this.$moment({year: year, month: month - 1}).startOf('month').startOf('week')
+      let endDayOfCalendar = this.$moment({year: year, month: month - 1}).endOf('month').endOf('week')
       let calendarLength = endDayOfCalendar.diff(startDayOfCalendar, 'days') + 1
       let block = []
       this.calendar.blocks = []
@@ -103,7 +106,7 @@ export default {
           item.isToday = true
         }
 
-        let schedule = this.scheduleItems.find(s => (s.date == item.day)) || {}
+        let schedule = this.scheduleItems.find(s => (s.date === item.day)) || {}
         item.memo = schedule.memo || '未定'
         if (schedule.color) {
           item.style = 'background-color: ' + schedule.color + ';'

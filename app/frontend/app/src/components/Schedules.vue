@@ -1,12 +1,14 @@
 <template>
   <div class="schedules">
-    <h1>スケジュールのリスト</h1>
+    <h3>スケジュールのリスト</h3>
     <div class="row">
       <div class="col s12 l6 offset-l3">
         <ul class="collection" v-for="s in schedules" :key="s.id">
-          <li class="collection-item">
-            <router-link :to="{ name: 'schedule', params: { id_hash: s.id_hash} }">{{s.year}}年{{s.month}}月:{{s.title}}</router-link>
-          </li>
+          <router-link :to="{ name: 'schedule', params: { id_hash: s.id_hash} }">
+            <li class="collection-item">
+              {{s.year}}年{{s.month}}月:{{s.title}}
+            </li>
+          </router-link>
         </ul>
       </div>
     </div>

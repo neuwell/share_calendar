@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2018_07_18_233855) do
 
   create_table "schedule_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "schedule_id"
-    t.string "date"
+    t.integer "date"
     t.string "memo"
     t.string "color"
     t.datetime "created_at", null: false
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 2018_07_18_233855) do
 
   create_table "schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "id_hash"
-    t.string "year"
-    t.string "month"
+    t.integer "year"
+    t.integer "month"
     t.string "title"
     t.string "description"
     t.datetime "created_at", null: false

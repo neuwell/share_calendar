@@ -2,7 +2,7 @@
   <div id="create-schedule" class="create-schedule ">
     <div class="row">
       <div class="col s12 l6 offset-l3">
-        <h2>スケジュールをつくる</h2>
+        <h3>スケジュールをつくる</h3>
         <div class="row">
           <el-form ref="formInput" :model="formInput" :rules="rules" :label-position="'top'">
             <el-form-item label="タイトル" prop="title">
@@ -124,9 +124,8 @@ export default {
   },
   methods: {
     renderCalendar: function (year, month) {
-      let startDayOfCalendar = this.$moment(year + '-' + month).startOf('month').startOf('week')
-      let endDayOfCalendar = this.$moment(year + '-' + month).endOf('month').endOf('week')
-      // let startDayOfCalendar = this.$moment(this.$moment(year).format('YYYY') + '-' + this.$moment(month).format('MM')).startOf('month').startOf('week')
+      let startDayOfCalendar = this.$moment({year: year, month: month - 1}).startOf('month').startOf('week')
+      let endDayOfCalendar = this.$moment({year: year, month: month - 1}).endOf('month').endOf('week')
       let calendarLength = endDayOfCalendar.diff(startDayOfCalendar, 'days') + 1
       let block = []
       this.calendar.blocks = []
@@ -185,7 +184,25 @@ export default {
           schedule_items_attributes: this.formInput.scheduleItems
         }
       }
-      this.$store.dispatch('schedule/postSchedule', res)
+      this.$store.dispatch('schedule/postSchedule', res).then(res => {
+        this.$notify({
+          group: 'main',
+          title: 'カレンダーつくれました！',
+          text: 'ページを友達と共有しましょう',
+          type: 'success'
+        })
+        this.$router.push({
+          name: 'schedule',
+          params: {id_hash: res.id_hash}
+        })
+      }).catch(e => {
+        this.$notify({
+          group: 'main',
+          title: 'NG',
+          text: 'システムエラー',
+          type: 'warn'
+        })
+      })
     },
     cansell () {
       this.$refs['formInput'].resetFields()
@@ -198,7 +215,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .content {
-  background: #C0FFEE;
+  background: #c0ffee;
   border-radius: 50%;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -216,12 +233,12 @@ export default {
 }
 
 .day-of-the-month {
-  background-color: #C0FFEE;
+  background-color: #c0ffee;
   height: auto;
 }
 
 .day-item {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   overflow: hidden;
   cursor: pointer;
 }

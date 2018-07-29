@@ -11,11 +11,14 @@
         </a>
       </router-link>
     </div>
+    <notifications group="main" />
   </div>
 </template>
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  created: function () {
+  }
 }
 </script>
 <style>

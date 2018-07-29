@@ -9,9 +9,9 @@
 
 Schedule.create(
   [
-    {id_hash: 'hash1', title: 'test1', year: '2000', month: '04' ,description: 'April news'},
-    {id_hash: 'hash2', title: 'test2', year: '2000', month: '05' ,description: 'May news'},
-    {id_hash: 'hash3', title: 'test3', year: '2000', month: '06' ,description: 'June news'}
+    {id_hash: 'hash1', title: 'test1', year: 2000, month: 4, description: 'April news'},
+    {id_hash: 'hash2', title: 'test2', year: 2000, month: 5, description: 'May news'},
+    {id_hash: 'hash3', title: 'test3', year: 2000, month: 6, description: 'June news'}
   ]
 )
 
